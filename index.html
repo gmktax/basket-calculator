@@ -96,6 +96,17 @@ input{font:inherit;color:inherit}
 
 .page{max-width:1200px;margin:0 auto;padding:28px 24px 64px}
 
+/* Report Studio link */
+.rs-btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:999px;font-size:12.5px;font-weight:700;color:#fff;text-decoration:none;white-space:nowrap;
+  background:linear-gradient(135deg,#7c3aed 0%,#c026d3 55%,#f97316 100%);box-shadow:0 4px 12px rgba(192,38,211,.3);transition:filter .15s,transform .15s}
+.rs-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.rs-box{display:flex;align-items:center;gap:14px;margin:-4px 0 16px;padding:14px 16px;border-radius:14px;color:#fff;
+  background:linear-gradient(135deg,#6d28d9 0%,#a21caf 55%,#ea580c 100%);box-shadow:0 8px 20px rgba(162,28,175,.25)}
+.rs-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.18);flex:none}
+.rs-txt{flex:1;display:flex;flex-direction:column;gap:2px}.rs-txt b{font-size:15px}.rs-txt span{font-size:12.5px;opacity:.9}
+.rs-go{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 16px;border-radius:10px;background:#fff;color:#7e22ce;font-weight:700;font-size:13.5px;text-decoration:none;white-space:nowrap}
+.rs-go:hover{background:#faf5ff}
+
 /* ---------- HOME ---------- */
 .hello{margin:6px 0 24px}
 .hello .eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-2)}
@@ -248,6 +259,13 @@ button.tag:hover{background:rgba(255,255,255,.28)}
 .ivl{border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .iv{display:flex;align-items:center;padding:11px 16px;border-top:1px solid #eef1f6}
 .iv:first-child{border-top:0}
+.iv.def{background:#f6f3ff}.iv.def .v{color:#4b2a9b}
+.defrow{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:10px 12px;border-radius:10px;background:#f6f3ff;border:1px solid #ddd5f0;font-size:13px}
+.defrow span{flex:1;display:flex;align-items:center;gap:6px;color:#4b2a9b;white-space:nowrap}
+.defrow .inp{width:70px;text-align:center;padding:7px}
+.fwrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer}
+.fwrow input[type=checkbox]{width:18px;height:18px;accent-color:var(--brand-2)}
+.fwrow .sp{flex:1}.fwrow .inp{width:70px;text-align:center;padding:7px}
 .iv .n{flex:1;font-weight:500}
 .iv .n small{color:var(--faint);font-weight:500;margin-left:6px}
 .iv .v{font-size:20px;font-weight:800;color:var(--brand);font-variant-numeric:tabular-nums}
@@ -290,7 +308,7 @@ button.tag:hover{background:rgba(255,255,255,.28)}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}}
 
 @media (max-width:760px){
-  .crumb,.brand-s,.sync .t{display:none}
+  .crumb,.brand-s,.sync .t,.rs-btn .t{display:none}
   .topbar-in{padding:0 12px;gap:8px}
   .page{padding:18px 12px 48px}
   .bar .btn .t{display:none}
@@ -322,6 +340,7 @@ button.tag:hover{background:rgba(255,255,255,.28)}
       </div>
       <div class="crumb" id="crumb"></div>
       <div class="top-actions">
+        <a class="rs-btn" id="rsTop" target="_blank" rel="noopener noreferrer" title="Open GMK Report Studio in a new tab"><span data-icon="chart" data-size="16"></span><span class="t">Report Studio</span><span data-icon="ext" data-size="13"></span></a>
         <button class="sync" id="sync" data-act="settings" title="Sync status"><span class="d"></span><span class="t">On this device</span></button>
         <button class="icon-btn" data-act="refresh" title="Get latest from team"><span data-icon="refresh" data-size="17"></span></button>
         <button class="icon-btn" data-act="settings" title="Settings"><span data-icon="settings" data-size="17"></span></button>
@@ -352,7 +371,8 @@ const CONFIG = {
   github: { owner: '', repo: 'basket-data', branch: 'main', path: 'data.json' },
   pollSeconds: 45,
   defaultIntervals: [1, 2, 5, 10, 50],
-  keepDays: 60
+  keepDays: 60,
+  reportStudioUrl: 'https://gmktax.github.io/report-studio/'
 };
 
 /* ===================== ICONS (Lucide, MIT) ===================== */
@@ -384,6 +404,8 @@ const IC = {
   upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>',
   file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>',
   calendar:'<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+  chart:'<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16V12"/><path d="M12 16V8"/><path d="M17 16v-5"/>',
+  ext:'<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
   clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
 };
 const ic = (n, s = 18) => `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ''}</svg>`;
@@ -417,11 +439,20 @@ const decimalsOf = s => { s = String(s).replace(/,/g, ''); const i = s.indexOf('
 /* ===================== THE CALCULATION ===================== */
 // Total baskets = ROUND(Shares outstanding ÷ Shares per basket, 0)
 // Interval      = ROUND(Total baskets × interval %, 0)
-function calc(spb, so, intervals) {
+// Default framework (per client): Interval 1 = fixed number of baskets (normally 1); the % intervals move to Interval 2, 3, …
+function calc(spb, so, intervals, def = null) {
   if (!(spb > 0) || !(so > 0)) return null;
-  const raw = so / spb, baskets = xlRound(raw, 0);
-  return { raw, baskets, rows: intervals.map((p, i) => ({ n: i + 1, pct: p, v: xlRound(baskets * p / 100, 0) })) };
+  const raw = so / spb, baskets = xlRound(raw, 0), off = def === null ? 0 : 1;
+  const rows = intervals.map((p, i) => ({ n: i + 1 + off, pct: p, v: xlRound(baskets * p / 100, 0) }));
+  if (def !== null) rows.unshift({ n: 1, pct: null, v: def });
+  return { raw, baskets, rows };
 }
+const ivLabel = x => x.pct === null ? `Interval ${x.n} (Default)` : `Interval ${x.n} (${x.pct}%)`;
+const MAX_TOTAL = 8;                                                     // max 8 intervals in total (1 Default + 7)
+const isDefFw = c => !!c && c.framework === 'default';
+const defFor = (c, k) => isDefFw(c) ? (k.defB !== null && k.defB !== undefined ? k.defB : c.defB) : null;
+const kdef = k => defFor(C(data, ui.cid), k);
+const maxPct = c => isDefFw(c) ? MAX_TOTAL - 1 : MAX_TOTAL;
 function navMismatch(tna, so, navStr) {
   const nav = parseNum(navStr);
   if (!(tna > 0) || !(so > 0) || !(nav > 0)) return null;
@@ -454,7 +485,7 @@ const pStyle = person => { const i = person && data.colors ? data.colors[person]
 const SOURCES = { json: 'BNYM JSON file (e.g. BlackRock)', holding: 'iShares NAV price file .xlsx (e.g. State Street)', manual: 'Typed by hand only' };
 const SRC_TAG = { json: 'JSON upload', holding: 'Holding file', manual: 'Manual' };
 function emptyData() { return { version: 1, rev: uid(), updatedAt: new Date().toISOString(), clients: [], colors: {} }; }
-const cleanInts = a => Array.isArray(a) ? [...new Set(a.map(Number).filter(x => x > 0 && x <= 100))].sort((x, y) => x - y) : [...CONFIG.defaultIntervals];
+const cleanInts = a => Array.isArray(a) ? [...new Set(a.map(Number).filter(x => x > 0 && x <= 100))].sort((x, y) => x - y).slice(0, 8) : [...CONFIG.defaultIntervals];
 function cleanDays(o) {
   const out = {}; if (!o || typeof o !== 'object') return out;
   Object.keys(o).filter(k => /^\d{4}-\d{2}-\d{2}$/.test(k)).sort().slice(-CONFIG.keepDays).forEach(k => {
@@ -472,8 +503,9 @@ function normalize0(d) {
   const arr = a => (Array.isArray(a) ? a : []).filter(x => x && typeof x === 'object').slice(0, 500);
   return { version: 1, rev: clean(d.rev, 40) || uid(), updatedAt: clean(d.updatedAt, 40) || new Date().toISOString(),
     clients: arr(d.clients).map(c => ({ id: safeId(c.id), name: clean(c.name, 120) || 'Unnamed client', source: SOURCES[c.source] ? c.source : 'json',
+      framework: c.framework === 'default' ? 'default' : 'standard', defB: Number.isFinite(+c.defB) && +c.defB >= 0 && c.defB !== '' && c.defB !== null && c.defB !== undefined ? +c.defB : 1,
       funds: arr(c.funds).map(f => ({ id: safeId(f.id), fundId: clean(f.fundId, 40), name: clean(f.name, 160), person: clean(f.person, 60), imports: cleanImports(f.imports),
-        classes: arr(f.classes).map(k => ({ id: safeId(k.id), name: clean(k.name, 60) || 'Class', code: clean(k.code, 20), isin: clean(k.isin, 20).toUpperCase(),
+        classes: arr(f.classes).map(k => ({ id: safeId(k.id), name: clean(k.name, 60) || 'Class', code: clean(k.code, 20), defB: k.defB === null || k.defB === undefined || k.defB === '' || !(+k.defB >= 0) ? null : +k.defB, isin: clean(k.isin, 20).toUpperCase(),
           spb: +k.spb > 0 ? +k.spb : 0, intervals: cleanInts(k.intervals), days: cleanDays(k.days) })) })) })) };
 }
 const C = (d, cid) => d.clients.find(x => x.id === cid);
@@ -689,7 +721,7 @@ function filteredFunds(c) {
     (!q || [f.fundId, f.name, f.person].some(x => String(x || '').toLowerCase().includes(q))));
 }
 function classRow(f, k) {
-  const day = k.days[DAY], r = day ? calc(k.spb, day.so, k.intervals) : null, err = classError(f, k);
+  const day = k.days[DAY], r = day ? calc(k.spb, day.so, k.intervals, kdef(k)) : null, err = classError(f, k);
   let st;
   if (err) st = `<span class="st bad" title="${esc(err.msg)}">${ic('alert', 14)} ${esc(err.msg)}</span>`;
   else if (r) st = `<span class="st ok">${ic('check', 14)} ${fmtN(r.baskets, 0)} baskets</span>`;
@@ -844,8 +876,11 @@ function renderClient(pg, c) {
     <input type="file" id="jsonFile" accept="${c.source === 'holding' ? '.xlsx,.xls,.csv' : '.json,application/json'}" multiple class="hidden">
     <div class="title"><div><h2>${esc(c.name)}</h2><p>${plural(c.funds.length, 'fund')}${ks.length ? ` · <b>${done} of ${ks.length}</b> classes done for ${shortDate()}` : ''}${c.funds.some(f => openErrors(f).length) ? ` · <b style="color:var(--bad)">${c.funds.filter(f => openErrors(f).length).length} fund(s) with errors</b>` : ''}</p></div>
       <span class="sp"></span>
+      ${isDefFw(c) ? `<span class="srctag" style="align-self:center" title="Interval 1 = ${c.defB} basket(s), then the % intervals">Default framework</span>` : ''}
       <button class="btn ghost sm" data-act="edit-client" data-cid="${c.id}">${ic('pencil', 14)} Edit</button></div>
     ${ks.length ? (clientReady(c) ? `<div class="ready" style="margin:0 0 16px">${ic('check', 16)} All funds filed for today — the Excel is ready<button class="btn primary sm" data-act="final-excel" data-cid="${c.id}">${ic('download', 14)} Download Excel</button></div>`
+      + `<div class="rs-box"><div class="rs-ic">${ic('chart', 22)}</div><div class="rs-txt"><b>Next step: Report Studio</b><span>Download the Excel above, then upload it in Report Studio.</span></div>
+        <a class="rs-go" href="${esc(CONFIG.reportStudioUrl)}" target="_blank" rel="noopener noreferrer">Open Report Studio ${ic('ext', 14)}</a></div>`
       : `<div class="pend-panel"><div class="pend-t">${ic('clock', 13)} Pending to fill basket data · ${shortDate()}</div><div class="pend-grid">${pendingHtml(c, true)}</div></div>`) : ''}
     ${c.funds.length ? `<div class="filters">
       <div class="search">${ic('search', 16)}<input id="fq" type="search" placeholder="Search by name or Fund ID…" value="${esc(ui.q)}" autocomplete="off"></div>
@@ -909,10 +944,10 @@ function resultHtml(k, d) {
   if ([tna, parseNum(d.nav), so].some(Number.isNaN)) return `<div class="d-empty">One of the numbers has a typo. Use only digits, commas and one decimal point.</div>`;
   if (!(k.spb > 0)) return `<div class="d-empty">Set the shares per basket first (click the pencil at the top).</div>`;
   if (!(so > 0)) return `<div class="d-empty">Type the <b>Shares outstanding</b> above and the baskets appear here.</div>`;
-  const r = calc(k.spb, so, k.intervals), mm = navMismatch(tna, so, d.nav);
+  const r = calc(k.spb, so, k.intervals, kdef(k)), mm = navMismatch(tna, so, d.nav);
   return `<div class="total"><span class="l">Total number of baskets</span><span class="v num">${fmtN(r.baskets, 0)}</span></div>
     <div class="working num">${fmtN(so, 4)} shares ÷ ${fmtN(k.spb, 4)} per basket = ${fmtN(r.raw, 2)} → rounded to ${fmtN(r.baskets, 0)}</div>
-    ${r.rows.length ? `<div class="ivl">${r.rows.map(x => `<div class="iv"><span class="n">Interval ${x.n} <small>(${x.pct}%)</small></span><span class="v">${fmtN(x.v, 0)}</span></div>`).join('')}</div>`
+    ${r.rows.length ? `<div class="ivl">${r.rows.map(x => `<div class="iv ${x.pct === null ? 'def' : ''}"><span class="n">Interval ${x.n} <small>(${x.pct === null ? 'Default · fixed' : x.pct + '%'})</small></span><span class="v">${fmtN(x.v, 0)}</span></div>`).join('')}</div>`
       : `<div class="d-empty">No intervals yet. Click <b>Edit intervals</b> to add 1%, 2%, 5%…</div>`}
     ${mm !== null ? `<div class="warnbox">${ic('alert', 16)}<span>Please re-check: Total Net Assets ÷ Shares outstanding = <b>${fmtN(mm, 4)}</b>, which doesn't match the NAV per share you typed. One number may be from the wrong row or day.</span></div>` : ''}`;
 }
@@ -928,28 +963,34 @@ function saveDay() {
   if (!(tna > 0) || !(nav > 0) || !(so > 0)) { toast('Please fill all three figures with valid numbers', true); return; }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(D.draft.valDate || '')) { toast('Please pick the val. date (calendar button in the blue box)', true); return; }
   const day = DAY, at = new Date().toISOString(), navStr = clean(D.draft.nav, 30).replace(/,/g, ''), valDate = /^\d{4}-\d{2}-\d{2}$/.test(D.draft.valDate || '') ? D.draft.valDate : '';
-  const k = KL(data, cid, fid, kid), r = calc(k.spb, so, k.intervals);
+  const k = KL(data, cid, fid, kid), r = calc(k.spb, so, k.intervals, kdef(k));
   D.dirty = false;
   commit(d => { const x = KL(d, cid, fid, kid); if (!x) return; x.days[day] = { tna, nav, navStr, so, at, valDate, src: 'manual' }; x.days = cleanDays(x.days); },
     r ? `Saved — ${fmtN(r.baskets, 0)} baskets for ${k.name}` : 'Saved');
 }
 async function copyResult() {
   const D = ui.drawer, f = F(data, ui.cid, D.fid), k = KL(data, ui.cid, D.fid, D.kid);
-  const so = parseNum(D.draft.so), r = calc(k.spb, so, k.intervals);
+  const so = parseNum(D.draft.so), r = calc(k.spb, so, k.intervals, kdef(k));
   if (!r) { toast('Fill the figures first', true); return; }
   const lines = [['Fund ID', `${f.fundId} – ${k.name}${k.isin ? ' – ' + k.isin : ''}`], ['Val. date', fmtD(D.draft.valDate)], ['Number of Shares per Basket', k.spb], ['totalNetAssets', parseNum(D.draft.tna) ?? ''],
-    ['navPerShare', parseNum(D.draft.nav) ?? ''], ['sharesOutstanding', so], ['Total Number of Baskets:', r.baskets], ...r.rows.map(x => [`Interval ${x.n} (${x.pct}%)`, x.v])];
+    ['navPerShare', parseNum(D.draft.nav) ?? ''], ['sharesOutstanding', so], ['Total Number of Baskets:', r.baskets], ...r.rows.map(x => [ivLabel(x), x.v])];
   try { await navigator.clipboard.writeText(lines.map(l => l.join('\t')).join('\n')); toast('Copied — paste into Excel'); } catch (e) { toast('Your browser blocked copying', true); }
 }
 
 /* ===================== INTERVALS ===================== */
 function openIntervals() {
-  const D = ui.drawer, k = KL(data, ui.cid, D.fid, D.kid); if (!k) return;
+  const D = ui.drawer, c = C(data, ui.cid), k = KL(data, ui.cid, D.fid, D.kid); if (!k) return;
+  const df = isDefFw(c), full = k.intervals.length >= maxPct(c);
   openModal(`
     <div class="mh"><div class="m-ic">${ic('percent', 18)}</div><div><h3>Intervals for ${esc(k.name)}</h3><p>Saved for every day — you only set these once</p></div><button class="icon-btn" data-act="close-modal">${ic('x', 18)}</button></div>
     <div class="mb">
-      <div class="chips">${k.intervals.map(p => `<span class="chip">${p}%<button data-act="rm-interval" data-p="${p}" title="Remove">${ic('x', 14)}</button></span>`).join('') || '<span style="color:var(--muted)">No intervals yet.</span>'}</div>
-      <div style="display:flex;gap:8px;margin-top:16px;align-items:center"><input class="inp" id="newPct" inputmode="decimal" placeholder="New interval, e.g. 25" style="flex:1"><span style="font-weight:700;color:var(--muted)">%</span><button class="btn soft" data-act="add-interval">${ic('plus', 15)} Add</button></div>
+      ${df ? `<div class="defrow"><span>${ic('lock', 14)} <b>Interval 1 (Default)</b>&nbsp;· fixed baskets</span>
+        <input class="inp" id="defB" inputmode="numeric" value="${esc(k.defB === null ? '' : k.defB)}" placeholder="${esc(c.defB)}" title="Leave blank to use the client default (${esc(c.defB)})">
+        <button class="btn soft sm" data-act="save-defb">Save</button></div>
+        <div class="hint" style="font-size:11.5px;color:var(--faint);margin:-4px 0 12px">Blank = client default (${esc(c.defB)}). Your % intervals below become Interval 2, 3, …</div>` : ''}
+      <div class="chips">${k.intervals.map((p, i) => `<span class="chip">${df ? `<small style="opacity:.6;font-weight:600">#${i + 2}</small>` : ''}${p}%<button data-act="rm-interval" data-p="${p}" title="Remove">${ic('x', 14)}</button></span>`).join('') || '<span style="color:var(--muted)">No intervals yet.</span>'}</div>
+      ${full ? `<div class="note" style="margin-top:14px">Maximum reached — ${df ? '1 Default + 7 % intervals' : '8 intervals'}. Remove one to add another.</div>` : ''}
+      <div style="display:flex;gap:8px;margin-top:16px;align-items:center;${full ? 'display:none' : ''}"><input class="inp" id="newPct" inputmode="decimal" placeholder="New interval, e.g. 25" style="flex:1"><span style="font-weight:700;color:var(--muted)">%</span><button class="btn soft" data-act="add-interval">${ic('plus', 15)} Add</button></div>
       <div class="merr" id="ivErr" style="margin-top:8px"></div>
     </div>
     <div class="mf"><button class="btn primary" data-act="close-modal">Done</button></div>`);
@@ -960,12 +1001,20 @@ function addInterval() {
   const v = parseNum(($('#newPct').value || '').replace('%', ''));
   if (!(v > 0) || v > 100) { $('#ivErr').textContent = 'Type a number between 0 and 100.'; return; }
   if (KL(data, cid, fid, kid).intervals.includes(v)) { $('#ivErr').textContent = v + '% is already there.'; return; }
+  if (KL(data, cid, fid, kid).intervals.length >= maxPct(C(data, cid))) { $('#ivErr').textContent = 'Maximum intervals reached.'; return; }
   commit(d => { const x = KL(d, cid, fid, kid); if (x && !x.intervals.includes(v)) x.intervals = cleanInts([...x.intervals, v]); }, `${v}% interval added`);
   refreshAfterInterval();
 }
 function rmInterval(p) {
   const D = ui.drawer, cid = ui.cid, { fid, kid } = D;
   commit(d => { const x = KL(d, cid, fid, kid); if (x) x.intervals = x.intervals.filter(y => y !== p); }, `${p}% interval removed`);
+  refreshAfterInterval();
+}
+function saveDefB() {
+  const D = ui.drawer, cid = ui.cid, { fid, kid } = D, raw = $('#defB').value.trim();
+  const v = raw === '' ? null : parseNum(raw);
+  if (v !== null && !(v >= 0 && Number.isInteger(v))) { $('#ivErr').textContent = 'Default must be a whole number (0 or more), or blank.'; return; }
+  commit(d => { const x = KL(d, cid, fid, kid); if (x) x.defB = v; }, v === null ? 'Default reset to client value' : `Default interval set to ${v}`);
   refreshAfterInterval();
 }
 function refreshAfterInterval() {
@@ -1058,13 +1107,14 @@ function loadScript(src) { return new Promise((res, rej) => { const s = document
 async function downloadFinal(cid) {
   const c = C(data, cid); if (!c) return;
   if (!clientReady(c)) { toast('Some classes are still pending today', true); return; }
-  const maxN = Math.max(0, ...allClasses(c).map(k => k.intervals.length));
-  // label "Interval 1 (1%)" when every class uses the same % at that position, else just "Interval 1"
-  const ivHead = [...Array(maxN)].map((_, i) => { const ps = [...new Set(allClasses(c).map(k => k.intervals[i]).filter(x => x !== undefined))]; return ps.length === 1 ? `Interval ${i + 1} (${ps[0]}%)` : `Interval ${i + 1}`; });
+  const res = new Map(); c.funds.forEach(f => f.classes.forEach(k => res.set(k.id, calc(k.spb, k.days[DAY].so, k.intervals, defFor(c, k)))));
+  const maxN = Math.max(0, ...[...res.values()].map(r => r.rows.length));
+  // label "Interval 2 (1%)" when every class has the same interval at that position, else just "Interval 2"
+  const ivHead = [...Array(maxN)].map((_, i) => { const ls = [...new Set([...res.values()].map(r => r.rows[i] && ivLabel(r.rows[i])).filter(Boolean))]; return ls.length === 1 ? ls[0] : `Interval ${i + 1}`; });
   const head = ['Fund ID', 'Class code', 'Val. date', 'Number of Shares per Basket', 'totalNetAssets', 'navPerShare', 'sharesOutstanding', 'Total Number of Baskets', ...ivHead];
   const rows = [];
   c.funds.forEach(f => f.classes.forEach((k, idx) => {
-    const d = k.days[DAY], r = calc(k.spb, d.so, k.intervals);
+    const d = k.days[DAY], r = res.get(k.id);
     rows.push([f.fundId, k.code || String(idx + 1), fmtD(d.valDate), k.spb, d.tna, d.nav, d.so, r.baskets, ...[...Array(maxN)].map((_, i) => r.rows[i] ? r.rows[i].v : '')]);
   }));
   const fname = `Baskets_${c.name.replace(/[^\w-]+/g, '_')}_${DAY}`;
@@ -1103,6 +1153,7 @@ function openSettings() {
     <div class="mb">
       <div class="conn ${m === 'live' ? 'ok' : 'bad'}">${ic(m === 'live' ? 'check' : 'alert', 15)} ${m === 'live' ? 'Team sync is ON — every save is shared with the whole team' : 'Team sync is not set up — changes stay on this device only'}</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ghost sm" data-act="framework">${ic('layers', 14)} Default framework</button>
         <button class="btn ghost sm" data-act="sync-setup">${ic('key', 14)} Team sync setup (admin)</button>
         <button class="btn ghost sm" data-act="export">${ic('download', 14)} Backup (JSON)</button>
         <button class="btn ghost sm" data-act="import">${ic('upload', 14)} Import data (replaces all)</button>
@@ -1111,6 +1162,33 @@ function openSettings() {
       </div>
     </div>
     <div class="mf"><button class="btn primary" data-act="close-modal">Done</button></div>`);
+}
+function openFramework() {
+  openModal(`
+    <div class="mh"><div class="m-ic">${ic('layers', 18)}</div><div><h3>Default framework</h3><p>Pick the clients that move to it — saved for good</p></div><button class="icon-btn" data-act="close-modal">${ic('x', 18)}</button></div>
+    <div class="mb">
+      <div class="note" style="margin-bottom:14px"><b>What changes for a ticked client:</b><ol>
+        <li><b>Interval 1 (Default)</b> = a fixed number of baskets (normally 1).</li>
+        <li>Your % intervals move down one: 1% becomes Interval 2, 2% → Interval 3 … 50% → Interval 6.</li>
+        <li>Max 8 intervals: 1 Default + 7 %. Figures are still read from the JSON / State Street file exactly as now.</li></ol></div>
+      ${data.clients.map(c => `<label class="fwrow"><input type="checkbox" data-fw="${c.id}" ${isDefFw(c) ? 'checked' : ''}><b>${esc(c.name)}</b>
+        <span class="sp"></span><span style="font-size:12px;color:var(--muted)">Default baskets</span><input class="inp" data-fwb="${c.id}" inputmode="numeric" value="${esc(c.defB)}"></label>`).join('') || '<div class="note">No clients yet.</div>'}
+      <div class="merr" id="fwErr" style="margin-top:6px"></div>
+    </div>
+    <div class="mf"><button class="btn ghost" data-act="close-modal">Cancel</button><button class="btn primary" data-act="save-framework">${ic('check', 15)} Save</button></div>`);
+}
+async function saveFramework() {
+  const set = {};
+  for (const c of data.clients) {
+    const on = $(`[data-fw="${c.id}"]`).checked, b = parseNum($(`[data-fwb="${c.id}"]`).value);
+    if (!(b >= 0 && Number.isInteger(b))) { $('#fwErr').textContent = `${c.name}: default baskets must be a whole number.`; return; }
+    if (on) { const over = allClasses(c).filter(k => k.intervals.length > MAX_TOTAL - 1); if (over.length) { $('#fwErr').textContent = `${c.name}: ${over.length} class(es) have 8 % intervals — remove one first (max 1 Default + 7).`; return; } }
+    set[c.id] = { framework: on ? 'default' : 'standard', defB: b };
+  }
+  const moving = data.clients.filter(c => set[c.id].framework !== c.framework);
+  if (moving.length && !(await confirmBox('Change framework?', moving.map(c => `${c.name}: ${set[c.id].framework === 'default' ? 'move TO Default framework' : 'go BACK to the current framework'}`).join(' · ') + '. This applies for the whole team.', 'Yes, change'))) return;
+  closeModal();
+  commit(d => d.clients.forEach(c => { if (set[c.id]) Object.assign(c, set[c.id]); }), 'Framework saved');
 }
 function openSyncSetup() {
   const c = gh();
@@ -1197,12 +1275,15 @@ document.addEventListener('click', async e => {
     case 'copy': copyResult(); break;
     case 'intervals': openIntervals(); break;
     case 'add-interval': addInterval(); break;
+    case 'save-defb': saveDefB(); break;
     case 'rm-interval': rmInterval(+a.dataset.p); break;
     case 'settings': openSettings(); break;
     case 'close-modal': closeModal(); break;
     case 'refresh': if (mode() === 'local') toast('Team sync is not set up — open Settings'); else await pull(true); break;
     case 'lock': lockNow(); break;
     case 'sync-setup': openSyncSetup(); break;
+    case 'framework': openFramework(); break;
+    case 'save-framework': saveFramework(); break;
     case 'gen-key': genTeamKey(); break;
     case 'copy-key': { const t = $('#k-code'); t.select(); try { await navigator.clipboard.writeText(t.value); } catch (e) { document.execCommand('copy'); } toast('Copied — paste it into index.html'); break; }
     case 'import': $('#importFile').value = ''; $('#importFile').click(); break;
@@ -1306,6 +1387,7 @@ function startApp() {
   document.addEventListener('visibilitychange', () => { if (!document.hidden) pull(false); });
 }
 paintIcons();
+$('#rsTop').href = CONFIG.reportStudioUrl;
 buildKeypad();
 if (window.top !== window.self) { try { window.top.location = window.self.location.href; } catch (e) { document.body.innerHTML = ''; } }   // anti-clickjacking
 </script>
